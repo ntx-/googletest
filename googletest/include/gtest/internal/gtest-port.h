@@ -2327,7 +2327,12 @@ inline int IsATTY(int fd) { return _isatty(fd); }
 inline int StrCaseCmp(const char* s1, const char* s2) {
   return _stricmp(s1, s2);
 }
-inline char* StrDup(const char* src) { return _strdup(src); }
+inline char* StrDup(const char* src) {
+    auto len = strlen(src) + 1;
+    char* newstr = static_cast<char*>(malloc(len));
+    memcpy(newstr, src, len);
+    return newstr;
+}
 # endif  // __BORLANDC__
 
 # if GTEST_OS_WINDOWS_MOBILE
